@@ -13,10 +13,6 @@ import (
 
 var (
 	version       = "0.0.0"
-	build         = "0"
-	versionString = func() string {
-		return fmt.Sprintf("%s@%s", version, build)
-	}
 )
 
 // Args is
@@ -34,7 +30,7 @@ var (
 func init() {
 
 	flag.Usage = func() {
-		fmt.Fprintf(flag.CommandLine.Output(), "Usage of %s %s:\n", os.Args[0], versionString())
+		fmt.Fprintf(flag.CommandLine.Output(), "Usage of %s %s:\n", os.Args[0], version)
 		fmt.Fprintf(flag.CommandLine.Output(), "[OPTION ...] COMMAND FILE ...\n")
 		flag.PrintDefaults()
 	}
