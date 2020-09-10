@@ -20,10 +20,10 @@ type Args struct {
 }
 
 var (
-	version       string        = "0.0.0"
-	versionbuild  string        = "0"
-	VersionString func() string = func() string {
-		return fmt.Sprintf("%s@%s", version, versionbuild)
+	version        string        = "0.0.0"
+	build          string        = "0"
+	_VersionString func() string = func() string {
+		return fmt.Sprintf("%s@%s", version, build)
 	}
 )
 
@@ -34,7 +34,7 @@ var (
 func init() {
 
 	flag.Usage = func() {
-		fmt.Fprintf(flag.CommandLine.Output(), "Usage of %s %s:\n", os.Args[0], VersionString())
+		fmt.Fprintf(flag.CommandLine.Output(), "Usage of %s %s:\n", os.Args[0], _VersionString())
 		fmt.Fprintf(flag.CommandLine.Output(), "[OPTION ...] COMMAND FILE ...\n")
 		flag.PrintDefaults()
 	}
