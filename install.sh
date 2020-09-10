@@ -8,4 +8,4 @@ BUILD=`git log -1 --pretty=format:%h`
 go install -ldflags "-X main.version=${VERSION} -X main.build=${BUILD}" 
 
 ## test 
-fstream -v
+fstream -version

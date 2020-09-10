@@ -7,5 +7,7 @@ BUILD=`git log -1 --pretty=format:%h`
 ## go build
 go build -ldflags "-X main.version=${VERSION} -X main.build=${BUILD}" 
 
-## test 
-./fstream -v
+## test version
+./fstream -version
+## test function
+./fstream cat filestream.go

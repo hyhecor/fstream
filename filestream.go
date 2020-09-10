@@ -11,21 +11,21 @@ import (
 	"os/exec"
 )
 
-// Args is
-type Args struct {
-	version bool
-	help    bool
-	command string
-	files   []string
-}
-
 var (
-	version        string        = "0.0.0"
-	build          string        = "0"
-	_VersionString func() string = func() string {
+	version       = "0.0.0"
+	build         = "0"
+	versionString = func() string {
 		return fmt.Sprintf("%s@%s", version, build)
 	}
 )
+
+// Args is
+type Args struct {
+	help    bool
+	version bool
+	command string
+	files   []string
+}
 
 var (
 	args Args
@@ -34,18 +34,15 @@ var (
 func init() {
 
 	flag.Usage = func() {
-		fmt.Fprintf(flag.CommandLine.Output(), "Usage of %s %s:\n", os.Args[0], _VersionString())
+		fmt.Fprintf(flag.CommandLine.Output(), "Usage of %s %s:\n", os.Args[0], versionString())
 		fmt.Fprintf(flag.CommandLine.Output(), "[OPTION ...] COMMAND FILE ...\n")
 		flag.PrintDefaults()
 	}
 
-	flag.BoolVar(&args.help, "h", false, "help")
 	flag.BoolVar(&args.version, "version", false, "version")
+	flag.BoolVar(&args.help, "h", false, "help")
 
-	flag.Set("COMMAND", "")
-	flag.Set("FILEs", "")
-
-	flag.Parse()
+	flag.Parse() // flag.Parse
 
 	if args.help {
 		flag.Usage()
@@ -55,6 +52,7 @@ func init() {
 		flag.Usage()
 		os.Exit(1)
 	}
+
 	if 2 > len(flag.Args()) {
 		flag.Usage()
 		os.Exit(1)
