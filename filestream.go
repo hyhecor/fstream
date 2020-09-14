@@ -12,7 +12,7 @@ import (
 )
 
 var (
-	version       = "0.0.0"
+	version = "0.0.0"
 )
 
 // Args is
@@ -45,7 +45,7 @@ func init() {
 		os.Exit(1)
 	}
 	if args.version {
-		flag.Usage()
+		fmt.Fprintf(flag.CommandLine.Output(), "%s", version)
 		os.Exit(1)
 	}
 

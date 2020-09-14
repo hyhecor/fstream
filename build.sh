@@ -7,8 +7,8 @@ BUILD=`git log -1 --pretty=format:%h`
 ## go build
 go build -ldflags "-X main.version=${VERSION}@${BUILD}" 
 
-## test version
-./fstream -version
+## test help
+./fstream -h
 
 ## test function
 ## hello 파일 만들기
