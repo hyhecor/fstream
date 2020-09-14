@@ -35,8 +35,8 @@ func init() {
 		flag.PrintDefaults()
 	}
 
-	flag.BoolVar(&args.version, "version", false, "version")
 	flag.BoolVar(&args.help, "h", false, "help")
+	flag.BoolVar(&args.version, "version", false, "version")
 
 	flag.Parse() // flag.Parse
 
