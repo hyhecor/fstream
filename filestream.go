@@ -9,6 +9,7 @@ import (
 	"log"
 	"os"
 	"os/exec"
+	"strings"
 )
 
 var (
@@ -19,8 +20,8 @@ var (
 type Args struct {
 	help    bool
 	version bool
-	command string
-	files   []string
+	command []string
+	files   string
 }
 
 var (
@@ -31,7 +32,7 @@ func init() {
 
 	flag.Usage = func() {
 		fmt.Fprintf(flag.CommandLine.Output(), "Usage of %s %s:\n", os.Args[0], version)
-		fmt.Fprintf(flag.CommandLine.Output(), "[OPTION ...] COMMAND FILE ...\n")
+		fmt.Fprintf(flag.CommandLine.Output(), "[OPTION ...] FILE COMMAND ...\n")
 		flag.PrintDefaults()
 	}
 
@@ -60,15 +61,15 @@ func main() {
 	for idx, arg := range flag.Args() {
 		switch idx {
 		case 0:
-			args.command = arg
+			args.files = arg
 		default:
-			args.files = append(args.files, arg)
+			args.command = append(args.command, arg)
 		}
 	}
 
 	var stdout bytes.Buffer
 	var stderr bytes.Buffer
-	cmd := exec.Command(args.command)
+	cmd := exec.Command(strings.Join(args.command, " "))
 	stdin, err := cmd.StdinPipe()
 	if nil != err {
 		log.Fatal(err)
@@ -83,17 +84,15 @@ func main() {
 
 	go func() {
 		defer stdin.Close()
-		for _, file := range args.files {
-			data, err := ioutil.ReadFile(file)
-			if nil != err {
-				log.Fatal(err)
-			}
-			s := string(data)
-			_, err = io.WriteString(stdin, s)
-			// _, err = stdin.Write(data)
-			if nil != err {
-				log.Fatal(err)
-			}
+
+		data, err := ioutil.ReadFile(args.files)
+		if nil != err {
+			log.Fatal(err)
+		}
+		s := string(data)
+		_, err = io.WriteString(stdin, s)
+		if nil != err {
+			log.Fatal(err)
 		}
 	}()
 

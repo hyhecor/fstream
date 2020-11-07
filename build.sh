@@ -16,6 +16,6 @@ cat <<EOF > hello
 hello, world!
 EOF
 ## 테스트 fstream을 실행하여 cat 명령으로 hello 파일 읽기
-./fstream  cat hello
+./fstream hello cat
 ## hello 파일 지우기
 rm hello
