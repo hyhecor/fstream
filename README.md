@@ -15,7 +15,7 @@
     ## 테스트 cat hello 파일 읽기
     cat hello 
     ## 테스트 fstream을 실행하여 cat 명령으로 hello 파일 읽기
-    fstream cat hello
+    fstream hello cat
 
 결과 `hello, world!`
 
